@@ -2,4 +2,4 @@
 A collection of simple React projects and challenges.
 
 Projects Included:
-1. React Stopwatch
+1. react-stopwatch
