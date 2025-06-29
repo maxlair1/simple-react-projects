@@ -1,18 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
+import { getItem, setItem } from './localStorage'
 import { 
   TextField,
   Button,
   Heading,
   Box,
   Flex,
-  Divider,
   Checkbox,
   Container,
   IconButton
 } from 'gestalt';
 
-interface todoItem { 
+export interface todoItem { 
   name: string;
   isComplete: boolean;
   id: string;
@@ -20,7 +20,14 @@ interface todoItem {
 
 function App() {
   const [taskName, setTaskName] = useState<string>('')
-  const [items, setItems] = useState<todoItem[]>([]);
+  const [items, setItems] = useState<todoItem[]>(() => {
+      const task = getItem("tasks")
+      return (task as todoItem[]) || undefined
+  });
+
+  useEffect(() => {
+    setItem("tasks", items)
+  }, [items])
 
   const handleAdd = () => {
     if (taskName.trim() === '') return;
